@@ -7,7 +7,7 @@ from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 import os
 
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
-GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID"]
+GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID")
 OPENAI_API_BASE = os.getenv("OPENAI_API_BASE")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") 
 OPENAI_API_TYPE = os.getenv("OPENAI_API_TYPE")
