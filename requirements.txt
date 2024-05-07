@@ -11,3 +11,4 @@ langchain-google-community
 tiktoken
 faiss-cpu
 langchain-openai
+bs4
