@@ -6,13 +6,14 @@ from langchain.retrievers.web_research import WebResearchRetriever
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 import os
 
-GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
-GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID")
-AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT")
-AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY") 
-AZURE_API_VERSION = os.getenv("AZURE_API_VERSION")
-MODEL = os.getenv("MODEL")
-EMBEDDING_MODEL = os.getenv("AZURE_EMBEDDING_DEPLOYMENT")
+# Access secrets
+GOOGLE_API_KEY = st.secrets["google_api_key"]
+GOOGLE_CSE_ID = st.secrets["google_cs_id"]
+api_key = st.secrets["api_key"]
+api_version = st.secrets["api_version"]
+azure_endpoint = st.secrets["azure_endpoint"]
+deployment_chat = st.secrets["deployment_chat"]
+deployment_embed = st.secrets["deployment_embed"]
 st.set_page_config(page_title="Interweb Explorer", page_icon="🌐")
 
 def settings():
@@ -21,11 +22,11 @@ def settings():
     import faiss
     from langchain_community.vectorstores.faiss import FAISS, DistanceStrategy
     from langchain_community.docstore import InMemoryDocstore  
-    embeddings_model = AzureOpenAIEmbeddings(
-        api_key=AZURE_OPENAI_API_KEY,
-        api_version=AZURE_API_VERSION,
-        azure_endpoint=AZURE_ENDPOINT,
-        model=EMBEDDING_MODEL,
+    embeddings = AzureOpenAIEmbeddings(
+        api_key=api_key,
+        api_version=api_version,
+        azure_endpoint=azure_endpoint,
+        model=deployment_embed,
     )
 
     embedding_size = 1536  
@@ -34,13 +35,13 @@ def settings():
 
     # LLM
     llm = AzureChatOpenAI(
-        api_key=AZURE_OPENAI_API_KEY,
-        api_version=AZURE_API_VERSION,
-        azure_endpoint=AZURE_ENDPOINT,
-        model=MODEL,
+        api_key=api_key,
+        api_version=api_version,
+        azure_endpoint=azure_endpoint,
+        model=deployment_chat,
         temperature=0.6,
         max_tokens=2048,
-        streaming=True
+        streaming=True,
     )
     # Search
     from langchain_google_community import GoogleSearchAPIWrapper
