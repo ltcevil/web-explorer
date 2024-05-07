@@ -22,7 +22,7 @@ def settings():
     import faiss
     from langchain_community.vectorstores.faiss import FAISS, DistanceStrategy
     from langchain_community.docstore import InMemoryDocstore  
-    embeddings = AzureOpenAIEmbeddings(
+    embeddings_model = AzureOpenAIEmbeddings(
         api_key=api_key,
         api_version=api_version,
         azure_endpoint=azure_endpoint,
