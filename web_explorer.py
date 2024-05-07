@@ -108,9 +108,9 @@ if question:
     retrieval_streamer_cb = PrintRetrievalHandler(st.container())
     answer = st.empty()
     stream_handler = StreamHandler(answer, initial_text="`Answer:`\n\n")
-try:
-    result = qa_chain({"question": question}, callbacks=[retrieval_streamer_cb, stream_handler])
-    answer.info('`Answer:`\n\n' + result['answer'])
-    st.info('`Sources:`\n\n' + result['sources'])
-except Exception as e:
-    st.error(f"An error occurred: {e}")
+    try:
+        result = qa_chain({"question": question}, callbacks=[retrieval_streamer_cb, stream_handler])
+        answer.info('`Answer:`\n\n' + result['answer'])
+        st.info('`Sources:`\n\n' + result['sources'])
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
