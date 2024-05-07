@@ -43,7 +43,7 @@ def settings():
         streaming=True
     )
     # Search
-    from langchain_community.utilities import GoogleSearchAPIWrapper
+    from langchain_google_community import GoogleSearchAPIWrapper
     search = GoogleSearchAPIWrapper()   
 
     # Initialize 
