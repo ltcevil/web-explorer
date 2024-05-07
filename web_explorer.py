@@ -7,8 +7,8 @@ from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 import os
 
 # Access secrets
-GOOGLE_API_KEY = st.secrets["google_api_key"]
-GOOGLE_CSE_ID = st.secrets["google_cs_id"]
+google_api_key = st.secrets["google_api_key"]
+google_cs_id = st.secrets["google_cs_id"]
 api_key = st.secrets["api_key"]
 api_version = st.secrets["api_version"]
 azure_endpoint = st.secrets["azure_endpoint"]
