@@ -1,8 +1,9 @@
 import streamlit as st
 from langchain.callbacks.base import BaseCallbackHandler
-from langchain.chains import RetrievalQAWithSourcesChain
+from langchain.chains.qa_with_sources.retrieval import \
+    RetrievalQAWithSourcesChain
 from langchain.retrievers.web_research import WebResearchRetriever
-import openai
+from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 import os
 
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
@@ -19,16 +20,20 @@ def settings():
 
     # Vectorstore
     import faiss
-    from langchain.vectorstores import FAISS 
-    from langchain.embeddings.openai import OpenAIEmbeddings
-    from langchain.docstore import InMemoryDocstore  
-    embeddings_model = OpenAIEmbeddings()  
+    from langchain_community.vectorstores.faiss import FAISS, DistanceStrategy
+    from langchain_community.docstore import InMemoryDocstore  
+    embeddings_model = AzureOpenAIEmbeddings(
+        api_key=os.getenv("OPENAI_API_KEY"),
+        api_version=os.getenv("OPENAI_API_VERSION"),
+        azure_endpoint=os.getenv("OPENAI_API_BASE"),
+        deployment=os.getenv("AZURE_EMBEDDING_DEPLOYMENT"),
+    )
+
     embedding_size = 1536  
     index = faiss.IndexFlatL2(embedding_size)  
     vectorstore_public = FAISS(embeddings_model.embed_query, index, InMemoryDocstore({}), {})
 
     # LLM
-    from langchain.chat_models import AzureChatOpenAI
     llm = AzureChatOpenAI(
         api_key=os.getenv("OPENAI_API_KEY"),
         api_version=os.getenv("OPENAI_API_VERSION"),
@@ -39,7 +44,7 @@ def settings():
         streaming=True
     )
     # Search
-    from langchain.utilities import GoogleSearchAPIWrapper
+    from langchain_community.utilities import GoogleSearchAPIWrapper
     search = GoogleSearchAPIWrapper()   
 
     # Initialize 
