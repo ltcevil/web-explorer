@@ -2,13 +2,16 @@ import streamlit as st
 from langchain.callbacks.base import BaseCallbackHandler
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.retrievers.web_research import WebResearchRetriever
-
+import openai
 import os
 
-os.environ["GOOGLE_API_KEY"] = "YOUR_API_KEY" # Get it at https://console.cloud.google.com/apis/api/customsearch.googleapis.com/credentials
-os.environ["GOOGLE_CSE_ID"] = "YOUR_CSE_ID" # Get it at https://programmablesearchengine.google.com/
-os.environ["OPENAI_API_BASE"] = "https://api.openai.com/v1"
-os.environ["OPENAI_API_KEY"] = "YOUR_API_KEY" # Get it at https://beta.openai.com/account/api-keys
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
+GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID"]
+OPENAI_API_BASE = os.getenv("OPENAI_API_BASE")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") 
+OPENAI_API_TYPE = os.getenv("OPENAI_API_TYPE")
+OPENAI_API_VERSION = os.getenv("OPENAI_API_VERSION")
+OPENAI_API_MODEL = os.getenv("OPENAI_API_MODEL")
 
 st.set_page_config(page_title="Interweb Explorer", page_icon="🌐")
 
@@ -25,9 +28,16 @@ def settings():
     vectorstore_public = FAISS(embeddings_model.embed_query, index, InMemoryDocstore({}), {})
 
     # LLM
-    from langchain.chat_models import ChatOpenAI
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo-16k", temperature=0, streaming=True)
-
+    from langchain.chat_models import AzureChatOpenAI
+    llm = AzureChatOpenAI(
+        api_key=os.getenv("OPENAI_API_KEY"),
+        api_version=os.getenv("OPENAI_API_VERSION"),
+        azure_endpoint=os.getenv("OPENAI_API_BASE"),
+        model=os.getenv("OPENAI_API_MODEL"),
+        temperature=0.6,
+        max_tokens=2048,
+        streaming=True
+    )
     # Search
     from langchain.utilities import GoogleSearchAPIWrapper
     search = GoogleSearchAPIWrapper()   
