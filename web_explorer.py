@@ -8,12 +8,11 @@ import os
 
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID")
-OPENAI_API_BASE = os.getenv("OPENAI_API_BASE")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") 
-OPENAI_API_TYPE = os.getenv("OPENAI_API_TYPE")
-OPENAI_API_VERSION = os.getenv("OPENAI_API_VERSION")
-OPENAI_API_MODEL = os.getenv("OPENAI_API_MODEL")
-
+AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT")
+AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY") 
+AZURE_API_VERSION = os.getenv("AZURE_API_VERSION")
+MODEL = os.getenv("MODEL")
+EMBEDDING_MODEL = os.getenv("AZURE_EMBEDDING_DEPLOYMENT")
 st.set_page_config(page_title="Interweb Explorer", page_icon="🌐")
 
 def settings():
@@ -23,10 +22,10 @@ def settings():
     from langchain_community.vectorstores.faiss import FAISS, DistanceStrategy
     from langchain_community.docstore import InMemoryDocstore  
     embeddings_model = AzureOpenAIEmbeddings(
-        api_key=os.getenv("OPENAI_API_KEY"),
-        api_version=os.getenv("OPENAI_API_VERSION"),
-        azure_endpoint=os.getenv("OPENAI_API_BASE"),
-        deployment=os.getenv("AZURE_EMBEDDING_DEPLOYMENT"),
+        api_key=AZURE_OPENAI_API_KEY,
+        api_version=AZURE_API_VERSION,
+        azure_endpoint=AZURE_ENDPOINT,
+        model=EMBEDDING_MODEL,
     )
 
     embedding_size = 1536  
@@ -35,10 +34,10 @@ def settings():
 
     # LLM
     llm = AzureChatOpenAI(
-        api_key=os.getenv("OPENAI_API_KEY"),
-        api_version=os.getenv("OPENAI_API_VERSION"),
-        azure_endpoint=os.getenv("OPENAI_API_BASE"),
-        model=os.getenv("OPENAI_API_MODEL"),
+        api_key=AZURE_OPENAI_API_KEY,
+        api_version=AZURE_API_VERSION,
+        azure_endpoint=AZURE_ENDPOINT,
+        model=MODEL,
         temperature=0.6,
         max_tokens=2048,
         streaming=True
