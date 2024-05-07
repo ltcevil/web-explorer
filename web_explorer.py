@@ -6,9 +6,9 @@ from langchain.retrievers.web_research import WebResearchRetriever
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 import os
 
-# Access secrets
-google_api_key = st.secrets["google_api_key"]
-google_cs_id = st.secrets["google_cs_id"]
+# Access secrets 
+GOOGLE_API_KEY = st.secrets["GOOGLE_CS_ID"]
+GOOGLE_CS_ID= st.secrets["GOOGLE_CS_ID"]
 api_key = st.secrets["api_key"]
 api_version = st.secrets["api_version"]
 azure_endpoint = st.secrets["azure_endpoint"]
