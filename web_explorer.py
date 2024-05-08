@@ -84,7 +84,7 @@ class PrintRetrievalHandler(BaseCallbackHandler):
 
 st.sidebar.image("img/ai.png")
 st.header("`Crawler for Jarina`")
-st.info("`Ez a tool válaszokat talál és aggregál több lépésben egy adott kérdésre úgy, hogy megtalálja a forrásokat, elolvassa és összefoglalja.`")
+st.info("`Ez a tool válaszokat talál és aggregál több lépésben egy adott kérdésre úgy,hogy megtalálja a forrásokat, elolvassa és összefoglalja.`")
 
 # Make retriever and llm
 if 'retriever' not in st.session_state:
