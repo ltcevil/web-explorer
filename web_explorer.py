@@ -14,7 +14,7 @@ api_version = st.secrets["api_version"]
 azure_endpoint = st.secrets["azure_endpoint"]
 deployment_chat = st.secrets["deployment_chat"]
 deployment_embed = st.secrets["deployment_embed"]
-st.set_page_config(page_title="Interweb Explorer", page_icon="🌐")
+st.set_page_config(page_title="Crawler for Jarina", page_icon="🌐")
 
 def settings():
 
@@ -83,9 +83,8 @@ class PrintRetrievalHandler(BaseCallbackHandler):
 
 
 st.sidebar.image("img/ai.png")
-st.header("`Interweb Explorer`")
-st.info("`I am an AI that can answer questions by exploring, reading, and summarizing web pages."
-    "I can be configured to use different modes: public API or private (no data sharing).`")
+st.header("`Crawler for Jarina`")
+st.info("`Ez a tool válaszokat talál és aggregál több lépésben egy adott kérdésre úgy, hogy megtalálja a forrásokat, elolvassa és összefoglalja`")
 
 # Make retriever and llm
 if 'retriever' not in st.session_state:
